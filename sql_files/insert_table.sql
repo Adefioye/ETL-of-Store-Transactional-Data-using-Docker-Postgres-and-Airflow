@@ -1,0 +1,2 @@
+COPY clean_store_transactions(store_id, store_location, product_category, product_id, mrp, cp, discount, sp, date) 
+FROM '/var/lib/postgresql/store_files/clean_store_transactions.csv' DELIMITER ','  CSV HEADER;

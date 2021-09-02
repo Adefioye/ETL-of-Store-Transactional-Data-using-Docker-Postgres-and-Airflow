@@ -1,0 +1,44 @@
+# Aiflow set up with docker
+
+1. Pull docker-compose.yaml file from below into a specified directory
+
+https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html
+
+Abit of job was done to remove config relating to celery workers from the docker-compose
+file such as worker and redis.
+ 
+2. Then create dags, logs and plugins folder. After prepare the environment
+
+mkdir -p ./dags ./logs ./plugins
+echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
+
+3. Initialize the database and create the first user account
+
+docker-compose up airflow-init
+
+4. Run airflow
+
+docker-compose up
+
+5. Check running containers 
+
+docker ps
+
+6. Clean up the environment
+
+docker-compose down --volumes --remove-orphans
+rm -rf <directory-where-docker-compose.yaml-file-was downloaded>
+
+7. Running CLI commands using airflow-* services
+
+For example: docker-compose run airflow-worker airflow info
+
+pip install 'apache-airflow==2.1.3' --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.1.3/constraints-3.7.txt"
+
+airflow tasks test store_dag create_table 2021-08-30
+
+airflow tasks test store_dag insert_table 2021-08-30
+
+
+
+
